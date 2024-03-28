@@ -1,0 +1,6 @@
+transformers
+bentoml
+torch
+pillow
+yaml
+requests
