@@ -1,5 +1,8 @@
 import gradio as gr
 import requests
+from PIL import Image
+import io
+import base64
 
 def model_prediction(image_input, prediction_words):
     if image_input.startswith("http"):  # Input is a URL
