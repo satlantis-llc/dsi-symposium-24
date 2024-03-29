@@ -5,6 +5,7 @@ import yaml
 from fastapi import FastAPI
 import requests
 from PIL import Image
+from fastapi.middleware.cors import CORSMiddleware
 
 processor_runner = bentoml.transformers.get("clip_processor").to_runner()
 model_runner = bentoml.transformers.get("clip_model").to_runner()
