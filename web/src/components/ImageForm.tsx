@@ -16,7 +16,6 @@ const ImageForm: React.FC<ImageFormProps> = ({ imageUrl, onImageChange }) => {
     setIsLoading(true);
     const url = URL.createObjectURL(file);
     onImageChange(url);
-    console.log(url)
     setIsLoading(false);
   };
 

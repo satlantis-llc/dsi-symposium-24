@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 interface FormDataState {
   imageUrl: string;
@@ -8,15 +8,21 @@ interface FormDataState {
 interface FormDataContextProps {
   formData: FormDataState;
   setFormData: (formData: FormDataState) => void;
+  resetFormData: () => void;
 }
 
 const FormDataContext = createContext<FormDataContextProps | undefined>(undefined);
 
 export const FormDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [formData, setFormData] = useState<FormDataState>({ imageUrl: '', predictionWords: [] });
+  const initialState = { imageUrl: '', predictionWords: [] };
+  const [formData, setFormData] = useState<FormDataState>(initialState);
+
+  const resetFormData = useCallback(() => {
+    setFormData(initialState);
+  }, []);
 
   return (
-    <FormDataContext.Provider value={{ formData, setFormData }}>
+    <FormDataContext.Provider value={{ formData, setFormData, resetFormData }}>
       {children}
     </FormDataContext.Provider>
   );

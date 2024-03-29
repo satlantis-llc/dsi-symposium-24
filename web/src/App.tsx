@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ImageForm from '@/components/ImageForm';
 import WordForm from '@/components/WordForm';
+import Result from '@/components/Result';
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,8 @@ import { useFormData } from '@/context/FormDataContext';
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
-  const { formData, setFormData } = useFormData();
+  const { formData, setFormData, resetFormData } = useFormData();
+  const [predictionResults, setPredictionResults] = useState<{ [key: string]: number } | null>(null);
 
   useEffect(() => {
     document.body.classList.add(theme);
@@ -34,27 +36,33 @@ const App = () => {
       }
 
       const data = await response.json();
-      console.log('Response data:', data);
+      setPredictionResults(data);
 
-      // TODO: update UI/State
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
     }
   }
 
+  const handleRestart = () => {
+    resetFormData();
+    setPredictionResults(null);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex justify-between items-center p-4">
+      <header className="flex justify-between items-center p-4 md:p-6 lg:p-8">
         <h1>insert art later</h1>
         <div className="flex items-center">
-          <Switch id="theme-mode" onClick={toggleTheme} />
-          <Label htmlFor="theme-mode" className="ml-2">{theme === 'dark' ? 'Dark' : 'Light'} Mode</Label>
+          <Switch id="theme-mode"
+            className="data-[state=unchecked]:bg-[#9CA3AF] data-[state=checked]:bg-[#4b5563]"
+            onClick={toggleTheme} />
+          <Label htmlFor="theme-mode" className="m-2 text-gray-700 dark:text-gray-400">{theme === 'dark' ? 'Dark' : 'Light'} Mode</Label>
         </div>
       </header>
 
-      <main className="flex w-full flex-1">
-        <div className="flex w-1/2">
-          <div className="w-full flex flex-col justify-center h-full">
+      <main className="flex flex-col md:flex-row w-full flex-1">
+        <div className="w-full md:w-1/2">
+          <div className="flex flex-col justify-center h-full">
             <div className="flex-1 flex flex-col justify-center">
               <ImageForm
                 imageUrl={formData.imageUrl}
@@ -67,10 +75,20 @@ const App = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex-1 flex justify-center items-center">
-          <Button onClick={handleClick}>
-            Predict
-          </Button>
+        <div className="w-full md:w-1/2 flex-1 flex justify-center items-center">
+          {predictionResults ? (
+            <>
+              <Result results={predictionResults} />
+              <Button onClick={handleRestart} className='bg-red-500'>Restart</Button>
+            </>
+          ) : (
+            <Button 
+                className='bg-satyellow  dark:text-white text-6xl p-8 m-4 rounded-lg'
+                onClick={handleClick}
+            >
+                Predict
+            </Button>
+          )}
         </div>
       </main>
     </div>

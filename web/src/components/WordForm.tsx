@@ -34,7 +34,7 @@ const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
         ))}
         <Button
           onClick={addInputField}
-          className='p-4 my-2 rounded-md text-white bg-satyellow focus:ring-2 focus:ring-offset-2'
+          className='p-4 my-2 rounded-md dark:text-white bg-satyellow focus:ring-2 focus:ring-offset-2'
         >
           Add Word
         </Button>
