@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 
-const ImageForm: React.FC = () => {
-  const [imageUrl, setImageUrl] = useState<string>('');
+interface ImageFormProps {
+  onImageChange: (url: string) => void;
+}
+
+const ImageForm: React.FC<ImageFormProps> = ({ onImageChange }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
-  const processFile = (file: File) => {
+  const processFile = async (file: File) => {
     setIsLoading(true);
-    setImageUrl(URL.createObjectURL(file));
+    const url = URL.createObjectURL(file);
+    onImageChange(url);
     setIsLoading(false);
   };
 
@@ -19,7 +23,7 @@ const ImageForm: React.FC = () => {
   };
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(event.target.value);
+    onImageChange(event.target.value);
   };
 
   const handlePaste = (event: React.ClipboardEvent) => {
