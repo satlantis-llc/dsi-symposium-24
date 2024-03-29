@@ -19,7 +19,7 @@ with gr.Blocks() as demo:
     gr.Markdown("## CLIP Model")
     with gr.Row():
         image_input = gr.Image(
-            type="filepath", label="Upload an Image or Provide a URL"
+            type="filepath", label="Upload an Image or Provide a URL", sources=["upload", "clipboard"]
         )
         word_input = gr.Textbox(label="Enter words separated by commas")
     with gr.Row():
