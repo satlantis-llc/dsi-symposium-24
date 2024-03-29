@@ -1,0 +1,8 @@
+transformers>=4.0
+bentoml==1.2.9
+torch
+jax
+pillow
+fastapi
+requests
+pathlib

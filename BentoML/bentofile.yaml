@@ -1,0 +1,15 @@
+service: "service.py:svc"
+labels:
+  owner: Satlantis, LLC
+  project: DSI Symposium 2024
+include:
+- "*.py"
+python:
+  packages:
+  - transformers
+  - torch
+  - jax
+  - pillow
+  - fastapi
+  - requests
+  - pathlib
