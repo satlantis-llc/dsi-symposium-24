@@ -3,10 +3,11 @@ Codebase for the "Deploying AI and ML Models into Production" Workshop presented
 
 ## Prerequisites
 1. Install docker compose
+2. Python 3.10
 
 ## BentoML Usage
 1. `cd BentoML`
-2. `python3 -m venv venv`
+2. `python3.10 -m venv venv`
 3. `source venv/bin/activate`
 4. `pip install requirements.txt`
 5. `./build_script.sh`
