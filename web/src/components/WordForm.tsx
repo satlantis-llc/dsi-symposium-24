@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface WordFormProps {
   onPredictionWordsChange: (words: string[]) => void;
+  resetTrigger: boolean;
 }
 
-const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
+const WordForm: React.FC<WordFormProps> = ({
+  onPredictionWordsChange,
+  resetTrigger,
+}) => {
   const [inputFields, setInputFields] = useState<string[]>(['', '', '']); // Initialize with 3 empty strings
+
+  useEffect(() => {
+    setInputFields(['', '', '']);
+  }, [resetTrigger]);
 
   const handleInputChange = (index: number, value: string) => {
     const updatedInputFields = [...inputFields];

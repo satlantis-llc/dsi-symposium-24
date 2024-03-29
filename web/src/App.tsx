@@ -15,6 +15,7 @@ const App = () => {
     [key: string]: number;
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(false);
 
   useEffect(() => {
     document.body.classList.add(theme);
@@ -27,7 +28,7 @@ const App = () => {
   async function handleClick() {
     setIsLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:3000/predict/', {
+      const response = await fetch('http://127.0.0.1:3000/predict', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,6 +54,7 @@ const App = () => {
   const handleRestart = () => {
     resetFormData();
     setPredictionResults(null);
+    setResetTrigger(prev => !prev);
   };
 
   return (
@@ -103,6 +105,7 @@ const App = () => {
             <div className="flex-1 flex flex-col items-center">
               <h2 className="text-3xl font-bold mb-4">Labels to Predict</h2>
               <WordForm
+                resetTrigger={resetTrigger}
                 onPredictionWordsChange={words =>
                   setFormData({ ...formData, predictionWords: words })
                 }

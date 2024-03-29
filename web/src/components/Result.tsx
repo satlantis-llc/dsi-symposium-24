@@ -26,10 +26,10 @@ const Result: React.FC<ResultProps> = ({ results }) => {
           dataKey="value"
           label={entry => entry.name}
         >
-          {data.map(index => (
+          {data.map((entry, index) => (
             <Cell
-              key={`cell-${index}`}
-              fill={COLORS[Number(index) % COLORS.length]}
+              key={`cell-${entry.name}`}
+              fill={COLORS[index % COLORS.length]}
             />
           ))}
         </Pie>
