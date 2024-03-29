@@ -27,7 +27,8 @@ const App = () => {
   async function handleClick() {
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('sending data');
+      console.log(formData);
       const response = await fetch('http://127.0.0.1:3000/predict/image_url', {
         method: 'POST',
         headers: {
@@ -35,6 +36,7 @@ const App = () => {
         },
         body: JSON.stringify(formData),
       });
+      console.log('sent data');
 
       if (!response.ok) {
         throw new Error(
@@ -44,6 +46,7 @@ const App = () => {
 
       const data = await response.json();
       setPredictionResults(data);
+      console.log('got prediction data');
       console.log(data);
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
