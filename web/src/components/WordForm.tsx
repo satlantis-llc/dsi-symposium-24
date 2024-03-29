@@ -29,19 +29,19 @@ const WordForm: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-4 bg-white shadow-md rounded-lg p-6">
+      <div className="w-full bg-card shadow-md rounded-lg p-6">
         {inputFields.map((inputField) => (
           <div key={inputField.id} className="flex flex-col space-y-2">
             <Input
               value={inputField.value}
               onChange={(e) => handleInputChange(inputField.id, e.target.value)}
-              className="border-gray-300 focus:border-satyellow focus:ring-sat-yellow rounded-md shadow-sm"
+              className="my-1 border-gray-300 focus:border-satyellow focus:ring-sat-yellow rounded-md shadow-sm"
             />
           </div>
         ))}
         <Button
           onClick={addInputField}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-satyellow hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sat-yellow"
+          className='p-4 my-2 rounded-md text-white bg-satyellow focus:ring-2 focus:ring-offset-2'
         >
           Add Word
         </Button>
