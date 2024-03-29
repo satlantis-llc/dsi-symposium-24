@@ -27,4 +27,4 @@ with gr.Blocks() as demo:
         fn=model_prediction, inputs=[image_input, word_input], outputs=results_output
     )
 
-demo.launch()
+demo.launch(server_port=5173)
