@@ -11,27 +11,32 @@ model_runner = bentoml.transformers.get("clip_model").to_runner()
 
 svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner])
 
-@bentoml.api(input=bentoml.io.JSON(), output=bentoml.io.Text(), route='/predict/image_url')
-async def image_url_inference(self, body: dict) -> str:
-    image_url = body.get("image_url")
-    input_labels = body.get("labels")
+@svc.api(input=bentoml.io.JSON(), output=bentoml.io.JSON(), route='/predict/image_url')
+async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
+    url = data.get("image_url")
+    labels = data.get("labels")
+    request_headers = ctx.request.headers
+
+    if not isinstance(labels, list):
+        labels = [labels]
 
     try:
-        image = Image.open(requests.get(image_url, stream=True).raw)
+        image = Image.open(requests.get(url, stream=True).raw)
     except Exception as e:
-        return "Error loading the image"
+        ctx.response.status_code = 400
+        return {"error": f"Error loading the image: {str(e)}"}
 
     try:
-        inputs = processor_runner(text=[f"a photo of a {l}" for l in input_labels], images=image, return_tensors="pt",
+        inputs = await processor_runner.async_run(text=[f"a photo of a {l}" for l in labels], images=image, return_tensors="pt",
                            padding=True)
-        outputs = model_runner(**inputs)
+        outputs = await model_runner.async_run(**inputs)
         logits_per_image = outputs.logits_per_image
-        probs = logits_per_image.softmax(dim=1).tolist()[0]
-        predicted_label_index = probs.index(max(probs))
-        predicted_label = input_labels[predicted_label_index]
-        return predicted_label
+        probs = logits_per_image.softmax(dim=1)
+        results = [{"label": label, "probability": f"{prob:.4f}"} for label, prob in zip(labels, probs[0])]
+        return {"results": results}
     except Exception as e:
-        return "Error processing the image"
+        ctx.response.status_code = 500
+        return {"error": f"Error processing the image: {str(e)}"}
 
 
 fastapi_app = FastAPI(debug=True)

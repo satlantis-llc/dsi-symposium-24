@@ -1,7 +1,7 @@
 service: "service.py:svc"
 labels:
-owner: bentoml-team
-project: gallery
+  owner: Satlantis, LLC
+  project: DSI Symposium 2024
 include:
 - "*.py"
 python:
@@ -9,3 +9,7 @@ python:
   - transformers
   - torch
   - jax
+  - pillow
+  - fastapi
+  - requests
+  - pathlib

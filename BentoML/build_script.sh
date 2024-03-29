@@ -2,13 +2,14 @@
 
 set -e
 
-MODEL="openai_clip"
+MODEL="clip_service"
 CONTAINER="${MODEL}_container"
 VERSION="1.0.0"
 
 export MODEL_IMAGE="$CONTAINER:$VERSION"
 export MODEL_PORT=3000
 export PROM_PORT=9090
+export GRAFANA_PORT=8000
 
 # Dependencies
 if ! [ -x "$(command -v bentoml)" ]; then
@@ -56,7 +57,6 @@ cat > prometheus.yml <<EOF
 global:
   scrape_interval:     5s
   evaluation_interval: 15s
-
 scrape_configs:
   - job_name: 'bentoml-container'
     metrics_path: '/metrics'
@@ -66,19 +66,15 @@ EOF
 
 sed -i "s/${PLACEHOLDER}/${MODEL_PORT}/g" prometheus.yml
 
+# Creates docker-compose.yml
 PLACEHOLDER="MODEL_IMAGE_PLACEHOLDER"
 cat > docker-compose.yml <<EOF
 version: '3'
-
 services:
   app:
     image: ${PLACEHOLDER}
     ports:
       - "${MODEL_PORT:-3000}:${MODEL_PORT:-3000}"
-    env_file:
-      - ./.env
-      - ./.model
-
   prometheus:
     image: prom/prometheus
     ports:
@@ -87,6 +83,10 @@ services:
       - ./prometheus.yml:/prometheus.yml
     command:
       - '--config.file=/prometheus.yml'
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
 EOF
 
 sed -i "s/${PLACEHOLDER}/${MODEL_IMAGE}/g" docker-compose.yml
