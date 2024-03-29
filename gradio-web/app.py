@@ -2,7 +2,7 @@ import gradio as gr
 import requests
 
 def model_prediction(image_url, prediction_words):
-    url = "http://127.0.0.1/predict/image_url"
+    url = "http://127.0.0.1:3000/predict/image_url"
     
     payload = {
         "imageUrl": image_url,
