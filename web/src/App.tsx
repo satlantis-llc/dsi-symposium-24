@@ -28,17 +28,17 @@ const App = () => {
 
       <main className="flex w-full flex-1">
         <div className="flex w-1/2">
-          <div className="w-full flex flex-col">
-            <div className="flex-1">
+          <div className="w-full flex flex-col justify-center h-full">
+            <div className="flex-1 flex flex-col justify-center">
               <ImageForm />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center">
               <WordForm />
             </div>
           </div>
         </div>
-      
-        <div className="w-1/2 flex-1">
+
+        <div className="w-1/2 flex-1 flex justify-center items-center">
           TODO
         </div>
       </main>

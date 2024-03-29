@@ -63,7 +63,7 @@ const ImageForm: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto p-6 bg-card shadow rounded-lg" onPaste={handlePaste}>
+    <div className="m-4 p-6 bg-card  shadow rounded-lg" onPaste={handlePaste}>
       <div
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
