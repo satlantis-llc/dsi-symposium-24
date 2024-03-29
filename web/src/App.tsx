@@ -12,6 +12,7 @@ const App = () => {
   const { theme, toggleTheme } = useTheme();
   const { formData, setFormData, resetFormData } = useFormData();
   const [predictionResults, setPredictionResults] = useState<{ [key: string]: number } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     document.body.classList.add(theme);
@@ -22,7 +23,9 @@ const App = () => {
   }, [theme]);
 
   async function handleClick() {
+    setIsLoading(true);
     try {
+      await new Promise(resolve => setTimeout(resolve, 2000)); 
       const response = await fetch('http://127.0.0.1:3000/predict', {
         method: 'POST',
         headers: {
@@ -40,6 +43,8 @@ const App = () => {
 
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -60,7 +65,7 @@ const App = () => {
         </div>
       </header>
 
-      <main className="flex flex-col md:flex-row w-full flex-1">
+      <main className="flex flex-col md:flex-row w-full flex-1 items-center">
         <div className="w-full md:w-1/2">
           <div className="flex flex-col justify-center h-full">
             <div className="flex-1 flex flex-col justify-center">
@@ -75,12 +80,14 @@ const App = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 flex-1 flex justify-center items-center">
+        <div className="w-full md:w-1/2 flex-1 flex flex-col justify-center items-center">
           {predictionResults ? (
             <>
               <Result results={predictionResults} />
-              <Button onClick={handleRestart} className='bg-red-500'>Restart</Button>
+              <Button onClick={handleRestart} className='bg-satblue-400 my-4'>Restart</Button>
             </>
+          ) : isLoading ? (
+            <div className='text-6xl p-8 m-4'>Loading...</div>
           ) : (
             <Button 
                 className='bg-satyellow  dark:text-white text-6xl p-8 m-4 rounded-lg'

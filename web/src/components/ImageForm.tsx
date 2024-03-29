@@ -93,9 +93,11 @@ const ImageForm: React.FC<ImageFormProps> = ({ imageUrl, onImageChange }) => {
   );
 
   return (
-    <div className="m-4 p-6 bg-card shadow rounded-lg">
-      {imageUrl ? renderImagePreview() : renderImageInput()}
-      {isLoading && <div className="mt-2 text-center">Loading image...</div>}
+    <div className="flex flex-col max-w-screen-md w-full items-center justify-center p-4">
+      <div className="m-4 p-6 bg-card shadow max-w-screen-md rounded-lg">
+        {imageUrl ? renderImagePreview() : renderImageInput()}
+        {isLoading && <div className="mt-2 text-center">Loading image...</div>}
+      </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col max-w-screen-sm items-center justify-center p-4">
       <div className="w-full bg-card shadow-md rounded-lg p-6">
         {inputFields.map((value, index) => (
           <div key={index} className="flex flex-col space-y-2">
