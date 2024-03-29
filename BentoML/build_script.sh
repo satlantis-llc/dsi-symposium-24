@@ -17,11 +17,6 @@ if ! [ -x "$(command -v bentoml)" ]; then
     exit 1
 fi
 
-if ! [ -x "$(command -v docker-compose)" ]; then
-    echo "Error: Docker Compose is not installed. Please install Docker Compose before running this script." >&2
-    exit 1
-fi
-
 # Requirements
 files=("save_model.py" "service.py" "bentofile.yaml")
 for file in "${files[@]}"; do
@@ -91,4 +86,4 @@ EOF
 
 sed -i "s/${PLACEHOLDER}/${MODEL_IMAGE}/g" docker-compose.yml
 
-echo "Successfully built. Run 'docker-compose up' to spin up containers."
+echo "Successfully built. Run 'docker compose up' to spin up containers."
