@@ -2,9 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
@@ -18,6 +16,12 @@ module.exports = {
     },
     extend: {
       colors: {
+        /** Satlantis Colors */
+        sat_yellow: '#f8a41d',
+        sat_gray: '#22252e',
+        sat_blue: '#143154',
+
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

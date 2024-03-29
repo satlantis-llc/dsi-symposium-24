@@ -63,20 +63,20 @@ const ImageForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-white shadow rounded-lg" onPaste={handlePaste}>
+    <div className="container mx-auto p-6 bg-white dark:bg-gray-800 shadow rounded-lg" onPaste={handlePaste}>
       <div
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`p-6 ${isDragOver ? 'bg-blue-100' : 'bg-gray-50'} rounded-lg border-dashed border-2 border-gray-300`}
+        className={`p-6 ${isDragOver ? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-50 dark:bg-gray-700'} rounded-lg border-dashed border-2 border-gray-300 dark:border-gray-600`}
       >
         Drag and drop an image here or click to select a file
         <Input
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 opacity-0 absolute"
+          className="block w-full text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 opacity-0 absolute"
           aria-label="Upload image file"
         />
       </div>
@@ -86,7 +86,7 @@ const ImageForm: React.FC = () => {
           placeholder="Or enter an image URL from the internet"
           onChange={handleUrlChange}
           value={imageUrl}
-          className="flex-1 p-2.5 text-sm text-gray-900 bg-gray-50 rounded-l-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className="flex-1 p-2.5 text-sm text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 rounded-l-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
           aria-label="Image URL"
         />
       </div>

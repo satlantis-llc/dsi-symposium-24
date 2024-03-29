@@ -36,7 +36,7 @@
   }
 
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 8%; /* Adjusted to match the HSL equivalent of #141414 from Satlantis Website */
     --foreground: 0 0% 98%;
 
     --card: 0 0% 3.9%;
