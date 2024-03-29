@@ -27,7 +27,10 @@ const Result: React.FC<ResultProps> = ({ results }) => {
           label={entry => entry.name}
         >
           {data.map(index => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[Number(index) % COLORS.length]}
+            />
           ))}
         </Pie>
         <Tooltip />
