@@ -9,7 +9,13 @@ from PIL import Image
 processor_runner = bentoml.transformers.get("clip_processor").to_runner()
 model_runner = bentoml.transformers.get("clip_model").to_runner()
 
-svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner])
+cors_config = {
+    "enabled": True,
+    "access_control_allow_origins": ["http://127.0.0.1/5173"],
+    "access_control_allow_methods": ["POST"],
+}
+
+svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner], http={"cors": cors_config})
 
 @svc.api(input=bentoml.io.JSON(), output=bentoml.io.JSON(), route='/predict/image_url')
 async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
