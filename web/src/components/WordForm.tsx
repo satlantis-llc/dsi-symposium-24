@@ -7,7 +7,7 @@ interface WordFormProps {
 }
 
 const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
-  const [inputFields, setInputFields] = useState<string[]>(['']);
+  const [inputFields, setInputFields] = useState<string[]>(['', '', '']); // Initialize with 3 empty strings
 
   const handleInputChange = (index: number, value: string) => {
     const updatedInputFields = [...inputFields];
@@ -21,20 +21,20 @@ const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
   };
 
   return (
-    <div className="flex flex-col max-w-screen-sm items-center justify-center p-4">
+    <div className="flex flex-col max-w-screen-sm min-w-96 items-center justify-center p-4">
       <div className="w-full bg-card shadow-md rounded-lg p-6">
         {inputFields.map((value, index) => (
           <div key={index} className="flex flex-col space-y-2">
             <Input
               value={value}
-              onChange={(e) => handleInputChange(index, e.target.value)}
+              onChange={e => handleInputChange(index, e.target.value)}
               className="my-1 border-gray-300 focus:border-satyellow focus:ring-sat-yellow rounded-md shadow-sm"
             />
           </div>
         ))}
         <Button
           onClick={addInputField}
-          className='p-4 my-2 rounded-md dark:text-white bg-satyellow focus:ring-2 focus:ring-offset-2'
+          className="p-4 my-2 rounded-md dark:text-white bg-satyellow focus:ring-2 focus:ring-offset-2"
         >
           Add Word
         </Button>

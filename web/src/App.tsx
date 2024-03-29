@@ -27,16 +27,13 @@ const App = () => {
   async function handleClick() {
     setIsLoading(true);
     try {
-      console.log('sending data');
-      console.log(formData);
-      const response = await fetch('http://127.0.0.1:3000/predict/image_url', {
+      const response = await fetch('http://127.0.0.1:3000/predict/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      console.log('sent data');
 
       if (!response.ok) {
         throw new Error(
@@ -46,8 +43,6 @@ const App = () => {
 
       const data = await response.json();
       setPredictionResults(data);
-      console.log('got prediction data');
-      console.log(data);
     } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
     } finally {
@@ -63,7 +58,21 @@ const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex justify-between items-center p-4 md:p-6 lg:p-8">
-        <h1>insert art later</h1>
+        <div className="flex items-center">
+          {theme === 'dark' ? (
+            <img
+              className="w-24 md:w-40 lg:w-72 rounded-lg"
+              src="/satlantis-logo-white.png"
+              alt="Satlantis Logo"
+            />
+          ) : (
+            <img
+              className="w-24 md:w-40 lg:w-72 rounded-lg"
+              src="/satlantis-logo-black.png"
+              alt="Satlantis Logo"
+            />
+          )}
+        </div>
         <div className="flex items-center">
           <Switch
             id="theme-mode"
@@ -79,10 +88,11 @@ const App = () => {
         </div>
       </header>
 
-      <main className="flex flex-col md:flex-row w-full flex-1 items-center">
-        <div className="w-full md:w-1/2">
-          <div className="flex flex-col justify-center h-full">
-            <div className="flex-1 flex flex-col justify-center">
+      <main className="flex flex-col md:flex-row w-full flex-1">
+        <div className="w-full md:w-1/2 items-center justify-center">
+          <div className="flex flex-col h-full">
+            <div className="flex-1 flex flex-col items-center">
+              <h2 className="text-3xl font-bold mb-4">Upload Image</h2>
               <ImageForm
                 imageUrl={formData.imageUrl}
                 onImageChange={url =>
@@ -90,7 +100,8 @@ const App = () => {
                 }
               />
             </div>
-            <div className="flex-1 flex flex-col justify-center">
+            <div className="flex-1 flex flex-col items-center">
+              <h2 className="text-3xl font-bold mb-4">Labels to Predict</h2>
               <WordForm
                 onPredictionWordsChange={words =>
                   setFormData({ ...formData, predictionWords: words })

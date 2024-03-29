@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 import { Button } from './ui/button';
 import { Cross1Icon } from '@radix-ui/react-icons';
 
@@ -46,9 +46,21 @@ const ImageForm: React.FC<ImageFormProps> = ({ imageUrl, onImageChange }) => {
   const renderImageInput = () => (
     <>
       <div
-        onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); }}
-        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); }}
-        onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); }}
+        onDragEnter={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragOver(true);
+        }}
+        onDragOver={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragOver(true);
+        }}
+        onDragLeave={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsDragOver(false);
+        }}
         onDrop={handleFileDrop}
         className={`p-6 ${isDragOver ? 'bg-satblue-100 dark:bg-satblue-900' : 'bg-gray-50 dark:bg-gray-700'} rounded-lg
         border-dashed border-2 border-gray-300 dark:border-gray-600`}
@@ -80,7 +92,11 @@ const ImageForm: React.FC<ImageFormProps> = ({ imageUrl, onImageChange }) => {
   const renderImagePreview = () => (
     <>
       <div className="relative">
-        <img src={imageUrl} alt="Preview" className="mt-4 max-w-full rounded-lg shadow-sm" />
+        <img
+          src={imageUrl}
+          alt="Preview"
+          className="mt-4 max-w-full rounded-lg shadow-sm"
+        />
         <Button
           onClick={handleClearImage}
           className="absolute top-0 right-0 bg-red-500 rounded-full m-1"
