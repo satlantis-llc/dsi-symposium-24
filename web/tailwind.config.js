@@ -17,9 +17,9 @@ module.exports = {
     extend: {
       colors: {
         /** Satlantis Colors */
-        sat_yellow: '#f8a41d',
-        sat_gray: '#22252e',
-        sat_blue: '#143154',
+        satyellow: '#f8a41d',
+        satgray: '#22252e',
+        satblue: '#143154',
 
 
         border: "hsl(var(--border))",
