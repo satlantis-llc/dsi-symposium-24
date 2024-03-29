@@ -10,12 +10,13 @@ processor_runner = bentoml.transformers.get("clip_processor").to_runner()
 model_runner = bentoml.transformers.get("clip_model").to_runner()
 
 cors_config = {
-    "enabled": True,
-    "access_control_allow_origins": ["http://127.0.0.1/5173"],
-    "access_control_allow_methods": ["POST"],
+    "allow_origins": ["http://127.0.0.1:5173"],
+    "allow_credentials": True,
+    "allow_methods": ["POST"],
+    "allow_headers": ["*"],
 }
 
-svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner], http={"cors": cors_config})
+svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner])
 
 @svc.api(input=bentoml.io.JSON(), output=bentoml.io.JSON(), route='/predict/image_url')
 async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
@@ -51,6 +52,14 @@ async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
 
 
 fastapi_app = FastAPI(debug=True)
+
+fastapi_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_config["allow_origins"],
+    allow_credentials=cors_config["allow_credentials"],
+    allow_methods=cors_config["allow_methods"],
+    allow_headers=cors_config["allow_headers"],
+)
 
 @fastapi_app.get("/metadata")
 def metadata():
