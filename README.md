@@ -4,6 +4,7 @@ Codebase for the "Deploying AI and ML Models into Production" Workshop presented
 ## Prerequisites
 1. Install docker compose
 2. Python 3.10
+3. npm >10.2
 
 ## BentoML Usage
 1. `cd BentoML`
@@ -13,3 +14,20 @@ Codebase for the "Deploying AI and ML Models into Production" Workshop presented
 5. `./build_script.sh`
 6. `docker-compose up`
 7. (Optional) Run `request.py` to test!
+
+## Frontend
+
+
+Compile the source code:
+
+```
+cd web
+npm i
+npm run build
+```
+
+To serve the client:
+```
+npm i -g serve
+serve -s dist -l 5173
+```
