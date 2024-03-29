@@ -1,25 +1,22 @@
 import gradio as gr
+import requests
 
-
-def model_prediction(image, words):
-    # placeholder for model prediction: bentoml later
-    import random
-
-    random.seed(42)
-    words = words.split(",")
-    results = {word.strip(): random.random() for word in words}
-    total = sum(results.values())
-
-    # normalize results to sum up to 100%
-    results = {word: round((value / total) * 100, 2) for word, value in results.items()}
-    return results
-
+def model_prediction(image_url, prediction_words):
+    url = "http://127.0.0.1/predict"
+    
+    payload = {
+        "imageUrl": image_url,
+        "predictionWords": prediction_words.split(",")
+    }
+    
+    response = requests.post(url, json=payload)
+    return response.json()
 
 with gr.Blocks() as demo:
     gr.Markdown("## CLIP Model")
     with gr.Row():
         image_input = gr.Image(
-            type="filepath", label="Upload an Image or Provide a URL", sources=["upload", "clipboard"]
+            type="filepath", label="Upload an Image or Provide a URL", sources=["upload", "clipboard"], tool=None
         )
         word_input = gr.Textbox(label="Enter words separated by commas")
     with gr.Row():
