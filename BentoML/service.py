@@ -36,7 +36,7 @@ async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
         outputs = await model_runner.async_run(**inputs)
         logits_per_image = outputs.logits_per_image
         probs = logits_per_image.softmax(dim=1)
-        return  {label: f"{prob:.4f}" for label, prob in zip(labels, probs[0])}
+        return {label: f"{prob:.4f}" for label, prob in zip(labels, probs[0])}
         # results = [{"label": label, "probability": f"{prob:.4f}"} for label, prob in zip(labels, probs[0])]
         # return {"results": results}
     except Exception as e:

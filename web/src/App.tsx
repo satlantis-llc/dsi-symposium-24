@@ -28,7 +28,7 @@ const App = () => {
     setIsLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      const response = await fetch('http://127.0.0.1:3000/predict', {
+      const response = await fetch('http://127.0.0.1:3000/predict/image_url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
