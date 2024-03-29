@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
+import { Button } from './ui/button';
+import { Cross1Icon } from '@radix-ui/react-icons';
 
 interface ImageFormProps {
+  imageUrl: string;
   onImageChange: (url: string) => void;
 }
 
-const ImageForm: React.FC<ImageFormProps> = ({ onImageChange }) => {
+const ImageForm: React.FC<ImageFormProps> = ({ imageUrl, onImageChange }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
 
@@ -13,6 +16,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ onImageChange }) => {
     setIsLoading(true);
     const url = URL.createObjectURL(file);
     onImageChange(url);
+    console.log(url)
     setIsLoading(false);
   };
 
@@ -22,57 +26,31 @@ const ImageForm: React.FC<ImageFormProps> = ({ onImageChange }) => {
     }
   };
 
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onImageChange(event.target.value);
-  };
-
-  const handlePaste = (event: React.ClipboardEvent) => {
-    const items = event.clipboardData.items;
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].type.indexOf('image') === 0) {
-        const blob = items[i].getAsFile();
-        if (blob) {
-          processFile(blob);
-        }
-      }
-    }
-  };
-
-  const handleDragEnter = (event: React.DragEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsDragOver(true);
-  };
-
-  const handleDragOver = (event: React.DragEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (!isDragOver) setIsDragOver(true);
-  };
-
-  const handleDragLeave = (event: React.DragEvent) => {
+  const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     setIsDragOver(false);
-  };
-
-  const handleDrop = (event: React.DragEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsDragOver(false);
-
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       processFile(event.dataTransfer.files[0]);
     }
   };
 
-  return (
-    <div className="m-4 p-6 bg-card  shadow rounded-lg" onPaste={handlePaste}>
+  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onImageChange(event.target.value);
+  };
+
+  const handleClearImage = () => {
+    onImageChange(''); // clear img state in parent
+    URL.revokeObjectURL(imageUrl); // clean up the object url
+  };
+
+  const renderImageInput = () => (
+    <>
       <div
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); }}
+        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(true); }}
+        onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); }}
+        onDrop={handleFileDrop}
         className={`p-6 ${isDragOver ? 'bg-satblue-100 dark:bg-satblue-900' : 'bg-gray-50 dark:bg-gray-700'} rounded-lg
         border-dashed border-2 border-gray-300 dark:border-gray-600`}
       >
@@ -92,17 +70,33 @@ const ImageForm: React.FC<ImageFormProps> = ({ onImageChange }) => {
           type="text"
           placeholder="Or enter an image URL from the internet"
           onChange={handleUrlChange}
-          value={imageUrl}
           className="flex-1 p-2.5 text-sm text-gray-900 dark:text-gray-100 bg-gray-50 
           dark:bg-gray-700 rounded-l-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
           aria-label="Image URL"
         />
       </div>
-      {isLoading ? (
-        <div className="mt-2 text-center">Loading image...</div>
-      ) : (
-        imageUrl && <img src={imageUrl} alt="Preview" className="mt-4 max-w-full rounded-lg shadow-sm" />
-      )}
+    </>
+  );
+
+  const renderImagePreview = () => (
+    <>
+      <div className="relative">
+        <img src={imageUrl} alt="Preview" className="mt-4 max-w-full rounded-lg shadow-sm" />
+        <Button
+          onClick={handleClearImage}
+          className="absolute top-0 right-0 bg-red-500 rounded-full m-1"
+          aria-label="Clear image"
+        >
+          <Cross1Icon />
+        </Button>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="m-4 p-6 bg-card shadow rounded-lg">
+      {imageUrl ? renderImagePreview() : renderImageInput()}
+      {isLoading && <div className="mt-2 text-center">Loading image...</div>}
     </div>
   );
 };

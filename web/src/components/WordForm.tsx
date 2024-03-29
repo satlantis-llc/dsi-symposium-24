@@ -2,39 +2,32 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-interface InputField {
-  id: number;
-  value: string;
+interface WordFormProps {
+  onPredictionWordsChange: (words: string[]) => void;
 }
 
-const WordForm: React.FC = () => {
-  const [inputFields, setInputFields] = useState<InputField[]>([
-    { id: Math.random(), value: '' },
-  ]);
+const WordForm: React.FC<WordFormProps> = ({ onPredictionWordsChange }) => {
+  const [inputFields, setInputFields] = useState<string[]>(['']);
 
-  const handleInputChange = (id: number, value: string) => {
-    const updatedInputFields = inputFields.map(input => {
-      if (input.id === id) {
-        return { ...input, value: value.split(' ')[0] }; // ensures only the first word is taken
-      }
-      return input;
-    });
+  const handleInputChange = (index: number, value: string) => {
+    const updatedInputFields = [...inputFields];
+    updatedInputFields[index] = value.split(' ')[0];
     setInputFields(updatedInputFields);
+    onPredictionWordsChange(updatedInputFields);
   };
 
   const addInputField = () => {
-    const uniqueId = Date.now() + Math.random();
-    setInputFields([...inputFields, { id: uniqueId, value: '' }]);
+    setInputFields([...inputFields, '']);
   };
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <div className="w-full bg-card shadow-md rounded-lg p-6">
-        {inputFields.map((inputField) => (
-          <div key={inputField.id} className="flex flex-col space-y-2">
+        {inputFields.map((value, index) => (
+          <div key={index} className="flex flex-col space-y-2">
             <Input
-              value={inputField.value}
-              onChange={(e) => handleInputChange(inputField.id, e.target.value)}
+              value={value}
+              onChange={(e) => handleInputChange(index, e.target.value)}
               className="my-1 border-gray-300 focus:border-satyellow focus:ring-sat-yellow rounded-md shadow-sm"
             />
           </div>
