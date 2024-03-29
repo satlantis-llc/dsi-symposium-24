@@ -19,7 +19,18 @@ module.exports = {
         /** Satlantis Colors */
         satyellow: '#f8a41d',
         satgray: '#22252e',
-        satblue: '#143154',
+        satblue: {
+          50: '#204e86',
+          100: '#1c4576',
+          200: '#183b65',
+          300: '#16365c',
+          400: '#153358',
+          500: '#143154', // Base color
+          600: '#122c4c',
+          700: '#0e223b',
+          800: '#0a182a',
+          900: '#060f19',
+        },
 
 
         border: "hsl(var(--border))",
