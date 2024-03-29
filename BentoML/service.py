@@ -19,6 +19,10 @@ async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
 
     if not isinstance(labels, list):
         labels = [labels]
+    
+    if not url or not labels:
+        ctx.response.status_code = 400
+        return {"error": "Missing imageUrl or predictionWords"}
 
     try:
         image = Image.open(requests.get(url, stream=True).raw)
@@ -32,8 +36,9 @@ async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
         outputs = await model_runner.async_run(**inputs)
         logits_per_image = outputs.logits_per_image
         probs = logits_per_image.softmax(dim=1)
-        results = [{"label": label, "probability": f"{prob:.4f}"} for label, prob in zip(labels, probs[0])]
-        return {"results": results}
+        return  {label: f"{prob:.4f}" for label, prob in zip(labels, probs[0])}
+        # results = [{"label": label, "probability": f"{prob:.4f}"} for label, prob in zip(labels, probs[0])]
+        # return {"results": results}
     except Exception as e:
         ctx.response.status_code = 500
         return {"error": f"Error processing the image: {str(e)}"}
