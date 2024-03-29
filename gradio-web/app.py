@@ -14,7 +14,7 @@ def model_prediction(image_input, prediction_words):
         image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
         image_url = "data:image/jpeg;base64," + image_base64
     
-    url = "http://127.0.0.1:3000/predict/image_url"
+    url = "http://127.0.0.1:3000/predict"
     
     payload = {
         "imageUrl": image_url,
