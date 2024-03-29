@@ -63,13 +63,13 @@ const App = () => {
         <div className="flex items-center">
           {theme === 'dark' ? (
             <img
-              className="w-24 md:w-40 lg:w-72 rounded-lg"
+              className="w-24 md:w-40 lg:w-72 rounded-lg m-4"
               src="/satlantis-logo-white.png"
               alt="Satlantis Logo"
             />
           ) : (
             <img
-              className="w-24 md:w-40 lg:w-72 rounded-lg"
+              className="w-24 md:w-40 lg:w-72 rounded-lg m-4"
               src="/satlantis-logo-black.png"
               alt="Satlantis Logo"
             />
