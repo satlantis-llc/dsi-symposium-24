@@ -13,8 +13,8 @@ svc = bentoml.Service("clip_service", runners=[processor_runner, model_runner])
 
 @svc.api(input=bentoml.io.JSON(), output=bentoml.io.JSON(), route='/predict/image_url')
 async def image_url_inference(data: dict, ctx: bentoml.Context) -> dict:
-    url = data.get("image_url")
-    labels = data.get("labels")
+    url = data.get("imageUrl")
+    labels = data.get("predictionWords")
     request_headers = ctx.request.headers
 
     if not isinstance(labels, list):

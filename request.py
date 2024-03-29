@@ -9,7 +9,7 @@ def request_image_url_endpoint(image_url: str, labels: list):
     api_url = "http://localhost:3000/predict/image_url"
 
     # Data to be sent in the request
-    input = { "image_url": image_url, "labels": labels }
+    input = { "imageUrl": image_url, "predictionWords": labels }
 
     # Sending POST request to the API
     response = requests.post(api_url, json=input)
