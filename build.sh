@@ -30,6 +30,7 @@ if ! [ -x "$VENV_PATH/bin/bentoml" ]; then
     if [ -e "bento/requirements.txt" ]; then
         pip install -r bento/requirements.txt
     else
+      
         echo "Error: bento/requirements.txt not found. Please ensure the file exists before running this script." >&2
         exit 1
     fi
@@ -52,7 +53,7 @@ if ! [ -x "$(command -v docker-compose)" ] && ! docker compose version > /dev/nu
 fi
 
 # Requirements
-files=("bento/save_model.py" "bento/service.py" "bento/bentofile.yaml")
+files=("bento/save_model.py" "bento/service.py" "bento/bentofile.yml")
 for file in "${files[@]}"; do
     if [ ! -e "$file" ]; then
         echo "Error: $file not found in the expected directory."
@@ -84,4 +85,4 @@ bentoml containerize "$MODEL:$VERSION" --docker-image-tag "$CONTAINER:$VERSION"
 # Exit bento module
 popd
 
-echo "Model Serving Images successfully built! Run `docker compose up` to start the service!"
+echo "Model Serving Images successfully built! Run docker compose up to start the service!"
