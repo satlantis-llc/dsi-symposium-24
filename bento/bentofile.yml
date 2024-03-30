@@ -3,13 +3,13 @@ labels:
   owner: Satlantis, LLC
   project: DSI Symposium 2024
 include:
-- "*.py"
+  - "*.py"
 python:
   packages:
-  - transformers
-  - torch
-  - jax
-  - pillow
-  - fastapi
-  - requests
-  - pathlib
+    - transformers
+    - torch
+    - jax
+    - pillow
+    - fastapi
+    - requests
+    - pathlib
