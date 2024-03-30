@@ -19,6 +19,8 @@ services:
     ports:
       - "8000:3000"
   web:
-    build: ./web
+    build:
+      context: .
+      dockerfile: web/Dockerfile
     ports:
       - "8080:80"
