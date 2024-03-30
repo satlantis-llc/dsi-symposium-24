@@ -6,7 +6,7 @@ def request_image_url_endpoint(image_url: str, labels: list):
     # labels = ["residential area", "playground", "stadium", "forest", "airport"]
 
     # URL of the API endpoint
-    api_url = "http://localhost:3000/predict"
+    api_url = "http://localhost:3000/predict/image_url"
 
     # Data to be sent in the request
     input = { "imageUrl": image_url, "predictionWords": labels }
