@@ -1,9 +1,22 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import random
+import argparse
+
+# Parse CLI arguments
+parser = argparse.ArgumentParser(description="Run Flask application")
+parser.add_argument(
+    "-p",
+    "--port",
+    type=int,
+    default=3000,
+    help="Port number to run the Flask application on",
+)
+args = parser.parse_args()
 
 app = Flask(__name__)
 CORS(app)
+
 
 def model_prediction(image, words):
     # placeholder for model prediction
@@ -16,14 +29,15 @@ def model_prediction(image, words):
     results = {word: round((value / total) * 100, 2) for word, value in results.items()}
     return results
 
-@app.route('/predict', methods=['POST'])
+
+@app.route("/predict", methods=["POST"])
 def predict():
     data = request.json
-    imageUrl = data.get('imageUrl', '')
-    predictionWords = data.get('predictionWords', '')
+    imageUrl = data.get("imageUrl", "")
+    predictionWords = data.get("predictionWords", "")
 
     if not imageUrl or not predictionWords:
-        return jsonify({'error': 'Missing imageUrl or predictionWords'}), 400
+        return jsonify({"error": "Missing imageUrl or predictionWords"}), 400
 
     # convert list of prediction words to a comma-separated string
     predictionWordsStr = ",".join(predictionWords)
@@ -31,5 +45,6 @@ def predict():
     results = model_prediction(imageUrl, predictionWordsStr)
     return jsonify(results)
 
-if __name__ == '__main__':
-    app.run(debug=True, port=3000)
+
+if __name__ == "__main__":
+    app.run(debug=True, port=args.port)
