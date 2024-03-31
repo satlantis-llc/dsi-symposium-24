@@ -28,7 +28,7 @@ const App = () => {
   async function handleClick() {
     setIsLoading(true);
     try {
-      const response = await fetch('http://server:3000/predict/image_url', {
+      const response = await fetch('/predict/image_url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
