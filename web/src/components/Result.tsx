@@ -6,16 +6,16 @@ interface ResultProps {
 }
 
 const COLORS = [
-  '#a1c9f4',
-  '#ffb482',
-  '#8de5a1',
-  '#ff9f9b',
-  '#d0bbff',
-  '#debb9b',
-  '#fab0e4',
-  '#cfcfcf',
-  '#fffea3',
-  '#b9f2f0',
+  '#f67088',
+  '#db8831',
+  '#ad9c31',
+  '#77aa31',
+  '#33b07a',
+  '#35aca4',
+  '#38a8c5',
+  '#6e9af4',
+  '#cc79f4',
+  '#f565cc',
 ];
 
 const shuffleColors = (array: string[]) => {
