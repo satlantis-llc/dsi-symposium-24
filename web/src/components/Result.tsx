@@ -6,27 +6,24 @@ interface ResultProps {
 }
 
 const COLORS = [
-  'hsl(0.0, 70%, 50%)',
-  'hsl(18.0, 70%, 50%)',
-  'hsl(36.0, 70%, 50%)',
-  'hsl(54.0, 70%, 50%)',
-  'hsl(72.0, 70%, 50%)',
-  'hsl(90.0, 70%, 50%)',
-  'hsl(108.0, 70%, 50%)',
-  'hsl(126.0, 70%, 50%)',
-  'hsl(144.0, 70%, 50%)',
-  'hsl(162.0, 70%, 50%)',
-  'hsl(180.0, 70%, 50%)',
-  'hsl(198.0, 70%, 50%)',
-  'hsl(216.0, 70%, 50%)',
-  'hsl(234.0, 70%, 50%)',
-  'hsl(252.0, 70%, 50%)',
-  'hsl(270.0, 70%, 50%)',
-  'hsl(288.0, 70%, 50%)',
-  'hsl(306.0, 70%, 50%)',
-  'hsl(324.0, 70%, 50%)',
-  'hsl(342.0, 70%, 50%)',
+  '#a1c9f4',
+  '#ffb482',
+  '#8de5a1',
+  '#ff9f9b',
+  '#d0bbff',
+  '#debb9b',
+  '#fab0e4',
+  '#cfcfcf',
+  '#fffea3',
+  '#b9f2f0',
 ];
+
+const shuffleColors = (array: string[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // ES6 array destructuring syntax to swap elements
+  }
+};
 
 const Result: React.FC<ResultProps> = ({ results }) => {
   const data = Object.keys(results).map(key => ({
@@ -34,8 +31,11 @@ const Result: React.FC<ResultProps> = ({ results }) => {
     value: results[key],
   }));
 
+  const shuffledColors = [...COLORS];
+  shuffleColors(shuffledColors);
+
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center w-auto mx-auto">
       <h2>Prediction Results</h2>
       <PieChart width={400} height={400}>
         <Pie
@@ -50,7 +50,7 @@ const Result: React.FC<ResultProps> = ({ results }) => {
           {data.map((entry, index) => (
             <Cell
               key={`cell-${entry.name}`}
-              fill={COLORS[index % COLORS.length]}
+              fill={shuffledColors[index % shuffledColors.length]}
             />
           ))}
         </Pie>
