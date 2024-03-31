@@ -57,6 +57,17 @@ const Result: React.FC<ResultProps> = ({ results }) => {
         <Tooltip />
         <Legend />
       </PieChart>
+      <div className="mt-8 w-full">
+        <h3 className="text-lg font-semibold mb-2">Values</h3>
+        <ul className="list-disc list-inside">
+          {Object.entries(results).map(([key, value]) => (
+            <li key={key} className="text-sm">
+              <span className="font-medium">{key}: </span>
+              <span className="text-blue-600">{value.toFixed(2)}%</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
