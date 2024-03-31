@@ -24,10 +24,12 @@ docker compose up
 
 ## Notes
 
-1. The client-server interaction is a WIP and you might face some CORS.
-2. The server is listening to port 3000, you can curl it directly in a console or postman.
-3. Provide a link to an image on the internet.
-4. Provide an array of labels you want it to predict.
+1. The client is a work in progress and might not support direct image uploads. Prefer internet URL. Not all internet URLs work well either, as some won't download correctly based on who's hosting them.
+2. The service provides a metrics dashboard at port 8000 and direct prometheus access at port 9090.
+3. You can also view service metrics at :3000/metrics
+4. The server is listening to port 3000, you can curl it directly in a console or postman.
+5. Provide a link to an image on the internet.
+6. Provide an array of labels you want it to predict.
 
 For example, let's predict pizza! Paste this into your terminal:
 
