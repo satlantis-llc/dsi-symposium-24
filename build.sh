@@ -7,9 +7,20 @@ CONTAINER="${MODEL}_container"
 VERSION="1.0.0"
 
 export MODEL_IMAGE="$CONTAINER:$VERSION"
-export MODEL_PORT=3000
-export PROM_PORT=9090
-export GRAFANA_PORT=8000
+
+SKIP_SAVE_MODEL=0 # default: don't skip the save_model
+
+for arg in "$@"; do
+  case $arg in
+    --no-save-model)
+      SKIP_SAVE_MODEL=1
+      shift # remove argument from processing
+      ;;
+    *)
+      # unknown option
+      ;;
+  esac
+done
 
 # Dependencies
 VENV_PATH="bento/venv"
@@ -30,7 +41,6 @@ if ! [ -x "$VENV_PATH/bin/bentoml" ]; then
     if [ -e "bento/requirements.txt" ]; then
         pip install -r bento/requirements.txt
     else
-      
         echo "Error: bento/requirements.txt not found. Please ensure the file exists before running this script." >&2
         exit 1
     fi
@@ -76,7 +86,11 @@ fi
 pushd bento
 
 # Save models into BentoML model store
-python3 save_model.py
+if [ "$SKIP_SAVE_MODEL" -eq 0 ]; then
+  python3 save_model.py
+else
+  echo "Skipping save model step"
+fi
 # Builds Model
 bentoml build --version "$VERSION" --bentofile bentofile.yml
 # Containerizes Model
