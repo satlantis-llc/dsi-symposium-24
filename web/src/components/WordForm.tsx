@@ -19,7 +19,7 @@ const WordForm: React.FC<WordFormProps> = ({
 
   const handleInputChange = (index: number, value: string) => {
     const updatedInputFields = [...inputFields];
-    updatedInputFields[index] = value.split(' ')[0];
+    updatedInputFields[index] = value;
     setInputFields(updatedInputFields);
     onPredictionWordsChange(updatedInputFields);
   };
