@@ -7,6 +7,9 @@ Codebase for the "Deploying AI and ML Models into Production" Workshop presented
 1. docker
 2. docker compose
 3. python 3.10
+4. Linux (or WSL)
+
+Note, the build script does not work out of the box on Windows. To be honest, I have no idea what goes on in that OS. You will have to translate the commands in `build.sh` to their counterparts. However, docker needs WSL to run anyways, so we recommend just doing it there.
 
 ## Installation
 
